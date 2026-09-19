@@ -1,0 +1,71 @@
+Fix only the two missing sections: Lab Report Analyzer and AI Referral Drafter.
+
+DO NOT change or redesign the existing PulseAI dashboard, Triage Queue, patient detail modal, Clinical tab, Technical tab, or Patient Explanation tab.
+
+### 1. LAB REPORT ANALYZER
+
+Make the "Lab Report Analyzer" item in the left sidebar open a real page.
+
+The page must contain:
+
+- Page title: "Lab Report Analyzer"
+- Subtitle: "Upload a laboratory report for AI-assisted clinical triage."
+- A large drag-and-drop upload area
+- "Choose Lab Report" button
+- Accept PDF and common medical report files
+- Show the selected filename after selection
+- Show an "Analyze Report" button
+- Show a loading state when Analyze Report is clicked
+- For now, create a DEMO analysis using the existing John Doe sample data.
+- Display:
+  - Risk Level: CRITICAL
+  - Potassium: 6.2 mEq/L
+  - Reference: 3.5–5.1 mEq/L
+  - Status: FLAGGED HIGH
+  - AI Summary
+- Clearly label the result as "DEMO ANALYSIS — AI BACKEND PENDING"
+- Include "Clinician review required."
+
+### 2. AI REFERRAL DRAFTER
+
+Make the "AI Referral Drafter" item in the left sidebar open a real page.
+
+The page must contain:
+
+- Page title: "AI Referral Drafter"
+- Subtitle: "Generate a structured referral draft from triage information."
+- Patient selector with:
+  - John Doe
+  - Jane Smith
+  - Alex Johnson
+- When John Doe is selected, display:
+  - Age: 58
+  - Sex: Male
+  - Chief complaint: Weakness and palpitations
+  - Risk: CRITICAL
+  - Potassium: 6.2 mEq/L
+- Show a referral draft containing:
+  - Patient information
+  - Reason for referral
+  - Key clinical findings
+  - Risk assessment
+  - Suggested urgency
+- Add a "Generate Referral Note" button.
+- Add a "Copy Referral Note" button.
+- Add a "Download Referral" button if easy to implement.
+- Clearly label the generated content as "DEMO / AI-ASSISTED DRAFT — CLINICIAN REVIEW REQUIRED."
+
+### IMPORTANT
+
+Use the existing design system and styling. Keep the same dark clinical PulseAI appearance.
+
+Make the sidebar navigation actually switch between:
+- Triage Queue
+- Patient Records
+- Lab Report Analyzer
+- AI Referral Drafter
+- Settings
+
+Do not delete existing functionality.
+
+After implementation, run the application and verify both pages are accessible from the sidebar.
