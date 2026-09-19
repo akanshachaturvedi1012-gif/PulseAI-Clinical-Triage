@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "PulseAI Clinical Triage"
+description = "A professional healthcare AI-assisted clinical triage dashboard for clinicians to review demo patient queues, analyze laboratory reports, and draft referral notes with explicit clinician oversight."
+version = "1.0.0"
+id = "artifacts/pulseai"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19969
+
+[services.development]
+run = "pnpm --filter @workspace/pulseai run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pulseai", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/pulseai/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19969"
+BASE_PATH = "/"

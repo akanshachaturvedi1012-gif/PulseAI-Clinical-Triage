@@ -1,0 +1,119 @@
+Build a professional healthcare AI clinical triage dashboard called "PulseAI".
+
+PulseAI is an AI-assisted clinical triage and clinical report analysis workspace designed for healthcare professionals. It is decision-support software and must clearly indicate that AI outputs require clinician review.
+
+Create a modern, professional clinical interface with a dark slate background and subtle glassmorphism.
+
+Use this visual palette:
+- Background: #0B0F17
+- Primary teal: #0D9488
+- Secondary blue: #2563EB
+- Alert/coral red: #EF4444
+- White/light gray text
+
+Create a persistent left sidebar containing:
+
+1. PulseAI logo/name at the top
+2. Triage Queue
+3. Patient Records
+4. Lab Report Analyzer
+5. AI Referral Drafter
+6. Settings
+
+At the top of the main content area create:
+- Global search
+- "Triage Agent: Active" status indicator
+- Clinician profile/avatar area
+
+The main dashboard should contain a page title:
+"Clinical Triage Dashboard"
+
+Add a small subtitle:
+"AI-assisted clinical decision support — clinician review required."
+
+Create four metric cards:
+- Patients in Queue
+- High Risk / Critical
+- Average Triage Time
+- Reports Processed
+
+Create a prominent laboratory report upload area with:
+- Drag and drop support
+- "Upload Lab Report" button
+- PDF/document icon
+- Text saying "Upload a patient laboratory report for AI-assisted triage analysis"
+- A secondary option to select an existing patient
+
+Below the upload area create a "Triage Queue" table.
+
+The table should have these columns:
+- Patient Name
+- Age / Sex
+- Chief Complaint
+- Risk Level
+- Key Flagged Biomarker
+- Wait Time
+- Action
+
+Use realistic DEMO data only and clearly label the application as a demonstration system.
+
+Include these sample patients:
+
+1. John Doe
+Age 58 / Male
+Chief Complaint: Weakness and palpitations
+Risk: CRITICAL
+Key Biomarker: Potassium 6.2 mEq/L
+Wait Time: 04 min
+
+2. Jane Smith
+Age 64 / Female
+Chief Complaint: Chest discomfort
+Risk: HIGH
+Key Biomarker: Troponin elevated
+Wait Time: 08 min
+
+3. Alex Johnson
+Age 31 / Male
+Chief Complaint: Routine health check
+Risk: STABLE
+Key Biomarker: None
+Wait Time: 12 min
+
+Use visually clear risk badges:
+CRITICAL, HIGH, MEDIUM, STABLE.
+
+Clicking "Review Patient File" should open a detailed patient view/modal.
+
+The detailed patient view should have:
+- Patient name, age, sex
+- Chief complaint
+- Risk level
+- Case status
+- Biomarker analysis
+- AI summary
+- SOAP note
+- Patient-friendly explanation
+- Generate Referral Note button
+- Emergency Alert button
+
+For the patient detail area create two viewing modes:
+1. Clinical / Technical
+2. Patient Explanation
+
+Clinical view should display:
+- Biomarker anomaly table
+- SOAP note with Subjective, Objective, Assessment and Plan
+- AI risk assessment
+
+Patient Explanation should display:
+- A simple plain-English explanation of the findings
+- Clear warning that this is AI-generated information and requires clinician review
+
+Make the application responsive and polished.
+
+Use realistic clinical dashboard components, cards, tables, badges, dialogs, tabs, buttons and loading states.
+
+Do not claim that PulseAI independently diagnoses, treats, or replaces a doctor.
+
+The application should feel like a serious hackathon-ready healthcare technology product rather than a generic admin dashboard.
