@@ -10,6 +10,12 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: patients
+    description: Synthetic patient records
+  - name: lab-reports
+    description: Laboratory report analysis
+  - name: referrals
+    description: Clinician-reviewed referral drafts
 paths:
   /healthz:
     get:
@@ -24,7 +30,153 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /patients:
+    get:
+      operationId: listPatients
+      tags: [patients]
+      summary: List patients
+      responses:
+        "200":
+          description: Patient records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Patient"
+    post:
+      operationId: createPatient
+      tags: [patients]
+      summary: Create a patient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePatientRequest"
+      responses:
+        "201":
+          description: Created patient
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Patient"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /patients/{id}:
+    get:
+      operationId: getPatient
+      tags: [patients]
+      summary: Get a patient
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Patient record
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Patient"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /lab-reports/analyze:
+    post:
+      operationId: analyzeLabReport
+      tags: [lab-reports]
+      summary: Analyze an uploaded laboratory report
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file:
+                  type: string
+                  format: binary
+                patient_id:
+                  type: string
+      responses:
+        "201":
+          description: Saved laboratory analysis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LabReport"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "502":
+          $ref: "#/components/responses/AIServiceError"
+  /lab-reports/{id}:
+    get:
+      operationId: getLabReport
+      tags: [lab-reports]
+      summary: Get a saved laboratory analysis
+      parameters:
+        - $ref: "#/components/parameters/Id"
+      responses:
+        "200":
+          description: Laboratory analysis
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LabReport"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /referrals/generate:
+    post:
+      operationId: generateReferral
+      tags: [referrals]
+      summary: Generate a clinician-reviewed referral draft
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateReferralRequest"
+      responses:
+        "201":
+          description: Saved referral draft
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Referral"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "502":
+          $ref: "#/components/responses/AIServiceError"
 components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    AIServiceError:
+      description: AI service failure or malformed response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
   schemas:
     HealthStatus:
       type: object
@@ -33,4 +185,134 @@ components:
           type: string
       required:
         - status
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        details:
+          type: string
+      required:
+        - error
+    RiskLevel:
+      type: string
+      enum: [CRITICAL, HIGH, MEDIUM, STABLE]
+    PatientStatus:
+      type: string
+      enum: [QUEUED, REVIEWED]
+    Patient:
+      type: object
+      properties:
+        id:
+          type: string
+        full_name:
+          type: string
+        age:
+          type: integer
+        gender:
+          type: string
+        chief_complaint:
+          type: string
+        risk_level:
+          $ref: "#/components/schemas/RiskLevel"
+        status:
+          $ref: "#/components/schemas/PatientStatus"
+        created_at:
+          type: string
+          format: date-time
+      required: [id, full_name, age, gender, chief_complaint, risk_level, status, created_at]
+    CreatePatientRequest:
+      type: object
+      properties:
+        full_name:
+          type: string
+          minLength: 1
+        age:
+          type: integer
+          minimum: 0
+          maximum: 130
+        gender:
+          type: string
+          minLength: 1
+        chief_complaint:
+          type: string
+        risk_level:
+          $ref: "#/components/schemas/RiskLevel"
+        status:
+          $ref: "#/components/schemas/PatientStatus"
+      required: [full_name, age, gender, chief_complaint, risk_level, status]
+    Biomarker:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        normal_range:
+          type: string
+        status:
+          type: string
+      required: [name, value, normal_range, status]
+    SoapNote:
+      type: object
+      properties:
+        subjective:
+          type: string
+        objective:
+          type: string
+        assessment:
+          type: string
+        plan:
+          type: string
+      required: [subjective, objective, assessment, plan]
+    LabReport:
+      type: object
+      properties:
+        id:
+          type: string
+        patient_id:
+          type: string
+        filename:
+          type: string
+        patient_name:
+          type: string
+        risk_level:
+          $ref: "#/components/schemas/RiskLevel"
+        overall_summary:
+          type: string
+        biomarkers:
+          type: array
+          items:
+            $ref: "#/components/schemas/Biomarker"
+        soap_note:
+          $ref: "#/components/schemas/SoapNote"
+        patient_explanation:
+          type: string
+        analysis_mode:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required: [id, patient_id, filename, patient_name, risk_level, overall_summary, biomarkers, soap_note, patient_explanation, analysis_mode, created_at]
+    GenerateReferralRequest:
+      type: object
+      properties:
+        patient_id:
+          type: string
+      required: [patient_id]
+    Referral:
+      type: object
+      properties:
+        id:
+          type: string
+        patient_id:
+          type: string
+        referral_text:
+          type: string
+        analysis_mode:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+      required: [id, patient_id, referral_text, analysis_mode, created_at]
 

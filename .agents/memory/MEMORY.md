@@ -1,0 +1,1 @@
+- [PulseAI AI pipeline](pulseai-ai-pipeline.md) — preserve the server-only Gemini path and labelled SQLite-backed demo fallback.

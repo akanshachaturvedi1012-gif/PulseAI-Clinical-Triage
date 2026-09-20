@@ -1,2 +1,17 @@
 export * from "./generated/api";
-export * from "./generated/types";
+export type {
+  AIServiceErrorResponse,
+  BadRequestResponse,
+  Biomarker,
+  CreatePatientRequest,
+  Error,
+  GenerateReferralRequest,
+  HealthStatus,
+  LabReport,
+  NotFoundResponse,
+  Patient,
+  PatientStatus,
+  Referral,
+  RiskLevel,
+  SoapNote,
+} from "./generated/types";

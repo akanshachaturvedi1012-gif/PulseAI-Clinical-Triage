@@ -1,0 +1,218 @@
+Now build the complete backend for my existing PulseAI project.
+
+IMPORTANT:
+- Do NOT redesign or remove my existing UI.
+- Do NOT break the currently working Triage Queue, Patient Records, Lab Report Analyzer, or AI Referral Drafter.
+- Keep the current frontend exactly as it is unless a small change is required for backend integration.
+- Build everything inside this existing Replit project.
+- I want a working hackathon MVP, not placeholder buttons.
+
+GOAL:
+Create this complete pipeline:
+
+Lab Report Upload
+→ Backend API
+→ AI clinical analysis
+→ Structured JSON
+→ Save result
+→ Display result in existing frontend
+
+BACKEND REQUIREMENTS:
+
+1. Create a Node.js/Express backend if one does not already exist.
+
+2. Create these API endpoints:
+
+POST /api/patients
+GET /api/patients
+GET /api/patients/:id
+
+POST /api/lab-reports/analyze
+GET /api/lab-reports/:id
+
+POST /api/referrals/generate
+
+3. Create a local SQLite database so the project does NOT require Supabase.
+
+Create these tables:
+
+patients:
+- id
+- full_name
+- age
+- gender
+- chief_complaint
+- risk_level
+- status
+- created_at
+
+lab_reports:
+- id
+- patient_id
+- filename
+- overall_summary
+- biomarkers
+- soap_note
+- patient_explanation
+- created_at
+
+referrals:
+- id
+- patient_id
+- referral_text
+- created_at
+
+4. Seed the database with these demo patients:
+
+John Doe
+Age: 45
+Gender: Male
+Chief complaint: Severe weakness and palpitations
+Risk: CRITICAL
+Status: QUEUED
+
+Jane Smith
+Age: 58
+Gender: Female
+Chief complaint: Chest discomfort
+Risk: HIGH
+Status: QUEUED
+
+Alex Johnson
+Age: 31
+Gender: Male
+Chief complaint: Routine health check
+Risk: STABLE
+Status: QUEUED
+
+5. AI ANALYSIS:
+
+Add an AI service layer for Gemini.
+
+Use the current supported Google Gemini API/SDK and read the API key from:
+
+GEMINI_API_KEY
+
+NEVER hard-code the API key.
+
+The AI must return structured JSON with:
+
+{
+  patient_name,
+  risk_level,
+  summary,
+  biomarkers: [
+    {
+      name,
+      value,
+      normal_range,
+      status
+    }
+  ],
+  soap_note: {
+    subjective,
+    objective,
+    assessment,
+    plan
+  },
+  patient_explanation
+}
+
+Validate the returned JSON before saving it.
+
+If GEMINI_API_KEY is not configured, the application must still work using a clearly labelled DEMO FALLBACK ANALYSIS.
+
+6. DEMO FALLBACK:
+
+For John Doe, return:
+
+risk_level: CRITICAL
+
+summary:
+"Severe hyperkalemia detected with potassium of 6.2 mEq/L. Immediate clinician review is required."
+
+biomarker:
+Potassium
+6.2 mEq/L
+normal range 3.5–5.0 mEq/L
+status CRITICAL
+
+Include a realistic SOAP note and plain-English patient explanation.
+
+Clearly label this as:
+"DEMO FALLBACK — AI BACKEND NOT CONFIGURED"
+
+7. LAB REPORT UPLOAD:
+
+The existing Lab Report Analyzer must call:
+
+POST /api/lab-reports/analyze
+
+Send the uploaded file to the backend.
+
+Show:
+- loading state
+- analysis result
+- risk level
+- summary
+- biomarkers
+- SOAP note
+- patient explanation
+- error message if analysis fails
+
+8. DATABASE:
+
+When an analysis succeeds, save the result into SQLite.
+
+The dashboard should be able to retrieve the saved result.
+
+9. REFERRAL:
+
+The existing AI Referral Drafter must call:
+
+POST /api/referrals/generate
+
+Generate a structured referral draft using the selected patient's clinical information.
+
+Clearly display:
+
+"AI-ASSISTED DRAFT — CLINICIAN REVIEW REQUIRED"
+
+Do NOT present the AI output as an autonomous medical decision.
+
+10. SECURITY:
+
+- Never expose GEMINI_API_KEY in frontend code.
+- Use environment variables.
+- Do not commit .env files.
+- Add .env.example containing:
+
+GEMINI_API_KEY=
+
+11. ERROR HANDLING:
+
+Add proper handling for:
+- missing file
+- invalid file
+- AI failure
+- database failure
+- missing patient
+- malformed AI response
+
+12. STARTUP:
+
+Make the Replit Run button start the complete application.
+
+If the project is a Vite/React frontend, configure the backend and frontend so they work together in Replit.
+
+13. IMPORTANT:
+
+Before finishing, inspect the existing project structure and integrate with it instead of creating a second unrelated application.
+
+Do not delete the existing UI.
+
+After implementing everything, give me a concise summary of:
+- files created/changed
+- how to run the app
+- any environment variables required
+- which existing UI pages are now connected to the backend.

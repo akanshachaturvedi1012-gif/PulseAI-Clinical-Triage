@@ -6,6 +6,9 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
+export interface Biomarker {
+  name: string;
+  value: string;
+  normal_range: string;
   status: string;
 }

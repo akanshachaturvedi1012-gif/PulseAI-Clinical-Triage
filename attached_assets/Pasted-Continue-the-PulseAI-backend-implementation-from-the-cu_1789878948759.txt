@@ -1,0 +1,73 @@
+Continue the PulseAI backend implementation from the current project state.
+
+The previous Agent stopped after creating the backend API contract and fixing the multipart/code-generation issue because the free quota ended.
+
+DO NOT redesign or remove the existing UI.
+DO NOT restart the project.
+
+Finish the actual backend now:
+
+1. Implement SQLite persistence for:
+- patients
+- lab_reports
+- referrals
+
+2. Seed:
+John Doe — 45 — Male — Severe weakness and palpitations — CRITICAL
+Jane Smith — 58 — Female — Chest discomfort — HIGH
+Alex Johnson — 31 — Male — Routine health check — STABLE
+
+3. Complete these APIs:
+POST /api/patients
+GET /api/patients
+GET /api/patients/:id
+POST /api/lab-reports/analyze
+GET /api/lab-reports/:id
+POST /api/referrals/generate
+
+4. Complete multipart/file upload handling.
+
+5. Add Gemini AI using GEMINI_API_KEY from environment variables.
+Do not expose the key to the frontend.
+Use a currently supported Gemini model/API.
+
+6. Gemini must return validated structured JSON containing:
+patient_name
+risk_level
+summary
+biomarkers
+soap_note
+patient_explanation
+
+7. If Gemini is unavailable, use a clearly labelled DEMO FALLBACK.
+
+John Doe fallback:
+CRITICAL
+Potassium 6.2 mEq/L
+Normal range 3.5–5.0 mEq/L
+Status CRITICAL
+Summary: Severe hyperkalemia detected with potassium of 6.2 mEq/L. Immediate clinician review is required.
+
+8. Save analysis results and referrals to SQLite.
+
+9. Connect the existing Lab Report Analyzer to the backend.
+
+10. Connect the existing AI Referral Drafter to the backend.
+
+11. Preserve the current visual design.
+
+12. Add loading/error handling.
+
+13. Keep clinician-review/AI-assisted safety messaging.
+
+14. Keep API keys out of frontend and Git.
+
+15. Update .env.example.
+
+16. Make the Replit Run button start the complete application.
+
+Inspect the current project first and reuse the existing architecture.
+
+IMPORTANT: Actually implement the unfinished parts. Do not just describe what needs to be done.
+
+At the end, tell me exactly which backend features were completed.
